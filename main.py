@@ -1,16 +1,16 @@
 import tkinter as tk
-from tkinter import messagebox,Toplevel
+from tkinter import messagebox
 import numpy as np
 import math
 
-
+# Constants used for aligning buttons
 BTN_PLACEMENT_Y = 250
 BTN_PLACEMENT_X = 40
 BTN_WIDTH = 10
 BTN_HEIGHT = 1
 
 
-
+########### Ball Class #################
 class Ball:
 
     def __init__(self,x,y,speed_x,speed_y, radius, color) -> None:
@@ -27,23 +27,25 @@ class Ball:
         # moving the ball
         self.x += self.x_speed
         self.y += self.y_speed
-    
 
-        # checking for collisions against the boarders
+        # checking for collisions against the boarders 
         if self.x + self.radius >= 600 or self.x - self.radius <= 0:
             self.x_speed = - self.x_speed
         
         if self.y + self.radius >= 900 or self.y - self.radius <= 0:
             self.y_speed = - self.y_speed
         
+    # draw function
     def draw(self, canvas):
         canvas.create_oval(self.x - self.radius, self.y - self.radius,
                           self.x + self.radius, self.y + self.radius, 
                           fill=self.color, outline='black')
     
+    # Collide with other ball function
     def ball_collides_with(self, other):
         distance = math.sqrt((self.x - other.x)**2 + (self.y - other.y)**2)
         return distance < (self.radius + other.radius)
+
 
 
 
@@ -54,7 +56,7 @@ def stop_btn_clicked():
     is_running = False
 
 
-
+#region Unused code
 # def show_non_blocking_message_box():
     
 #     dialog = Toplevel(root)
@@ -67,8 +69,10 @@ def stop_btn_clicked():
 
 #     cancel_button = tk.Button(dialog, text="Cancel", command=on_cancel)
 #     cancel_button.pack(side="right", padx=5, pady=20)
+#endregion
 
 
+# refreshes the canvas and redraws the balls in a new position
 def refresh():
     
     if not stop:
@@ -89,7 +93,7 @@ def refresh():
     
 
 
-
+# resets the canvas so that you can press start again without restarting tkinter
 def reset():
     global stop
     if stop:
@@ -97,20 +101,21 @@ def reset():
         stop = False
 
 
+# check for collisions between balls, makes it so that the bigger ball "eats" the smaller ball
 def check_collision():
     
     for i, ball_a in enumerate(tot_balls):
         for j, ball_b in enumerate(tot_balls):
             if i != j and ball_a.ball_collides_with(ball_b):
                 if ball_a.area > ball_b.area:
-                    new_radius = math.sqrt((ball_a.area + ball_b.area) / math.pi)
-                    ball_a.radius = new_radius
+                    new_radius = math.sqrt((ball_a.area + ball_b.area) / math.pi)   
+                    ball_a.radius = new_radius                                     # adds the area of the smaller to the bigger and removes the smaller from list
                     ball_a.area = ball_a.area + ball_b.area
                     tot_balls.pop(j)
                 else:
                     
                     new_radius = math.sqrt((ball_a.area + ball_b.area) / math.pi)
-                    ball_b.radius = new_radius
+                    ball_b.radius = new_radius                                     # adds the area of the smaller to the bigger and removes the smaller from list
                     ball_b.area = ball_a.area + ball_b.area
                     tot_balls.pop(i)
     return
@@ -121,7 +126,8 @@ def start_btn_clicked():
     global tot_balls
     global stop
     global is_running
-    if not is_running:
+    
+    if not is_running:     
         tot_balls = []
     
     if not stop and not is_running:
@@ -204,6 +210,7 @@ lbl_speed_of_sim.place(x=15, y=92)
 #if len(TOT_BALLS) == 1:
 #    show_non_blocking_message_box() 
 
+# sets the different variables before mainloop starts
 stop = False
 is_running = False
 
