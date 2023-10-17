@@ -1,3 +1,12 @@
+'''
+Reviewed by : Stephan Spengler
+Student: Emil Waldemar Petersson
+email: emil-waldemar.petersson.3310@student.uu.se
+date: 17.okt 2023
+'''
+
+
+
 import tkinter as tk
 from tkinter import messagebox
 import numpy as np
@@ -29,10 +38,11 @@ class Ball:
         self.y += self.y_speed
 
         # checking for collisions against the boarders 
-        if self.x + self.radius >= 600 or self.x - self.radius <= 0:
+        if ((self.x + self.radius >= 600)and (self.x_speed > 0)) or ((self.x - self.radius <= 0) and (self.x_speed < 0)):
+
             self.x_speed = - self.x_speed
         
-        if self.y + self.radius >= 900 or self.y - self.radius <= 0:
+        if ((self.y + self.radius >= 900) and (self.y_speed > 0)) or ((self.y - self.radius <= 0) and (self.y_speed < 0)):
             self.y_speed = - self.y_speed
         
     # draw function
@@ -45,6 +55,8 @@ class Ball:
     def ball_collides_with(self, other):
         distance = math.sqrt((self.x - other.x)**2 + (self.y - other.y)**2)
         return distance < (self.radius + other.radius)
+####################################################################
+
 
 
 
@@ -113,11 +125,11 @@ def check_collision():
                     ball_a.area = ball_a.area + ball_b.area
                     tot_balls.pop(j)
                 else:
-                    
                     new_radius = math.sqrt((ball_a.area + ball_b.area) / math.pi)
                     ball_b.radius = new_radius                                     # adds the area of the smaller to the bigger and removes the smaller from list
                     ball_b.area = ball_a.area + ball_b.area
                     tot_balls.pop(i)
+                    break
     return
 
 
