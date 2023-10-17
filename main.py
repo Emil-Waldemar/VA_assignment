@@ -55,18 +55,18 @@ def stop_btn_clicked():
 
 
 
-def show_non_blocking_message_box():
+# def show_non_blocking_message_box():
     
-    dialog = Toplevel(root)
+#     dialog = Toplevel(root)
 
-    label = tk.Label(dialog, text="Want to retry or cancel?")
-    label.pack(padx=20, pady=10)
+#     label = tk.Label(dialog, text="Want to retry or cancel?")
+#     label.pack(padx=20, pady=10)
 
-    ok_button = tk.Button(dialog, text="OK", command=on_ok)
-    ok_button.pack(side="left", padx=5, pady=20)
+#     ok_button = tk.Button(dialog, text="OK", command=on_ok)
+#     ok_button.pack(side="left", padx=5, pady=20)
 
-    cancel_button = tk.Button(dialog, text="Cancel", command=on_cancel)
-    cancel_button.pack(side="right", padx=5, pady=20)
+#     cancel_button = tk.Button(dialog, text="Cancel", command=on_cancel)
+#     cancel_button.pack(side="right", padx=5, pady=20)
 
 
 def refresh():
